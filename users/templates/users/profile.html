@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hồ Sơ Người Dùng</title>
+</head>
+<body>
+    <h1>Hồ sơ cá nhân của {{ user.username }}</h1>
+    <p>Email: {{ user.email }}</p>
+    <p>Vai trò: {{ user.get_role_display }}</p>
+    <a href="/users/dashboard/">Quay lại Dashboard</a>
+</body>
+</html>

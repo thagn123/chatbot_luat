@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot Tư Vấn Pháp Luật</title>
+    <!-- Bạn có thể tích hợp Bootstrap hoặc Tailwind CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Tư vấn Pháp Luật</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="query" class="form-control" placeholder="Nhập câu hỏi của bạn" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Gửi</button>
+    </form>
+
+    {% if answer %}
+    <div class="mt-4">
+        <h4>Kết quả trả lời cho: "{{ query }}"</h4>
+        <p>{{ answer }}</p>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Người Dùng</title>
+    <style>
+        nav {
+            background-color: #333;
+            padding: 10px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            padding: 10px 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Thanh menu điều hướng -->
+    <nav>
+        <ul>
+            <li><a href="/users/dashboard/">Trang Chủ</a></li>
+            <li><a href="/users/profile/">Hồ sơ cá nhân</a></li>
+            <li><a href="/documents/">Tài liệu pháp luật</a></li>
+            <li><a href="/subscriptions/">Gói cước</a></li>
+            <li><a href="/chatbot/">Chatbot</a></li>
+            <li><a href="/logout/">Đăng xuất</a></li>
+        </ul>
+    </nav>
+
+    <h1>Xin chào {{ user.username }}!</h1>
+
+    <h2>Tài liệu pháp luật</h2>
+    <ul>
+        {% for doc in documents %}
+        <li>{{ doc.title }} - Loại: {{ doc.get_law_type_display }}</li>
+        {% empty %}
+        <p>Không có tài liệu nào</p>
+        {% endfor %}
+    </ul>
+
+    <h2>Gói cước</h2>
+    <ul>
+        {% for sub in subscriptions %}
+        <li>Gói: {{ sub.package }} - Trạng thái: {{ sub.status }}</li>
+        {% empty %}
+        <p>Bạn chưa đăng ký gói cước nào.</p>
+        {% endfor %}
+    </ul>
+
+    <h2>Tương tác Chatbot</h2>
+    <form method="post" action="{% url 'chatbot_api' %}">
+        {% csrf_token %}
+        <input type="text" name="query" placeholder="Nhập câu hỏi của bạn">
+        <button type="submit">Gửi</button>
+    </form>
+
+</body>
+</html>

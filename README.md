@@ -1,6 +1,6 @@
 # chatbot_luat
 ## 📦 Các thư viện cần thiết
-Đặt Chỉ ở legal_assistant/legal_assistant
+Đặt Chỉ ở legal_assistant
 Dưới đây là danh sách các thư viện quan trọng để chạy dự án này:
 
 ###  **Web Scraping & Automation**

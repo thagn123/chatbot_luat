@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}Copilot Pháp Luật{% endblock %}
+
+{% block content %}
+<div class="card shadow p-3 mb-5 bg-white rounded">
+    <h3 class="card-title">🧠 Trợ lý Copilot Pháp luật</h3>
+    <div id="chatBox" class="border p-3 mb-3" style="height: 400px; overflow-y: auto; background-color: #f9f9f9;">
+        <!-- Tin nhắn sẽ hiển thị ở đây -->
+    </div>
+    <div class="input-group">
+        <input type="text" id="questionInput" class="form-control" placeholder="Nhập câu hỏi...">
+        <button class="btn btn-primary" onclick="askQuestion()">Gửi</button>
+    </div>
+</div>
+
+<script>
+    const chatBox = document.getElementById('chatBox');
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function askQuestion() {
+        const input = document.getElementById('questionInput');
+        const question = input.value.trim();
+        if (!question) return;
+
+        // Hiển thị câu hỏi
+        chatBox.innerHTML += `
+            <div class="text-end mb-2">
+                <span class="badge bg-primary">Bạn</span>
+                <div class="d-inline-block bg-light p-2 rounded" style="max-width: 70%;">${question}</div>
+            </div>`;
+        scrollToBottom();
+
+        // Gửi đến API
+        const res = await fetch('/chatbot/ask/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question })
+        });
+        const data = await res.json();
+
+        // Hiển thị câu trả lời
+        chatBox.innerHTML += `
+            <div class="text-start mb-2">
+                <span class="badge bg-success">Copilot</span>
+                <div class="d-inline-block bg-white p-2 border rounded" style="max-width: 70%;">${data.answer}</div>
+            </div>`;
+        input.value = '';
+        scrollToBottom();
+    }
+    <form id="upload-form" enctype="multipart/form-data" style="margin-top: 20px;">
+    <label for="contract-file">📄 Tải lên hợp đồng cần kiểm tra:</label><br>
+    <input type="file" id="contract-file" name="file" accept=".pdf,.doc,.docx" required>
+    <button type="submit">🔍 Kiểm tra hợp đồng</button>
+</form>
+
+<script>
+    document.getElementById("upload-form").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const fileInput = document.getElementById("contract-file");
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert("Vui lòng chọn một tệp hợp đồng.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch("/api/check_contract", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            appendMessage("Copilot", data.result || "Đã xử lý hợp đồng.");
+        })
+        .catch(err => {
+            console.error(err);
+            appendMessage("Copilot", "Đã có lỗi xảy ra khi xử lý hợp đồng.");
+        });
+    });
+</script>
+
+</script>
+{% endblock %}
+<a href="https://t.me/TEN_BOT_CUA_BAN" target="_blank">
+    <button style="background-color:#0088cc; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">
+        🚀 Mở Telegram Bot
+    </button>
+</a>

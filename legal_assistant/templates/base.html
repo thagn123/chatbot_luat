@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Trợ lý Pháp Luật{% endblock %}</title>
+    <style>
+        body { font-family: Arial; margin: 0; padding: 0; }
+        .navbar { background: #222; padding: 1rem; color: white; }
+        .navbar a { color: white; margin-right: 1rem; text-decoration: none; }
+        .container { padding: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">Trang chủ</a>
+        <a href="/chatbot/copilot/">Copilot</a>
+        <a href="/documents/">Tài liệu</a>
+        <a href="/users/">Người dùng</a>
+        <a href="/feedback/">Phản hồi</a>
+        <a href="/subscriptions/">Gói cước</a>
+    </div>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
+

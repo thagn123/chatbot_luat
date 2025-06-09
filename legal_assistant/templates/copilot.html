@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trợ lý Copilot Pháp luật</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            background-color: white;
+            border-radius: 16px;
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .chat-header::before {
+            content: "🧠 ";
+        }
+
+        .chat-box {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 12px;
+            height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            padding: 10px 16px;
+            border-radius: 20px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .bot-message {
+            background-color: #e4e6eb;
+            color: black;
+            align-self: flex-start;
+            text-align: left;
+        }
+
+        .input-container {
+            margin-top: 10px;
+            display: flex;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px 0 0 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border-radius: 0 8px 8px 0;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Trợ lý Copilot Pháp luật</div>
+        <div class="chat-box" id="chatBox"></div>
+        <div class="input-container">
+            <input type="text" id="questionInput" placeholder="Nhập câu hỏi..." onkeydown="if(event.key==='Enter'){askQuestion()}">
+            <button onclick="askQuestion()">Gửi</button>
+        </div>
+    </div>
+
+    <script>
+        function scrollToBottom() {
+            const chatBox = document.getElementById('chatBox');
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        async function askQuestion() {
+            const input = document.getElementById('questionInput');
+            const chatBox = document.getElementById('chatBox');
+            const question = input.value.trim();
+            if (!question) return;
+
+            // Hiển thị tin nhắn người dùng
+            chatBox.innerHTML += `<div class="message user-message">${question}</div>`;
+            scrollToBottom();
+
+            // Gửi request
+            const response = await fetch('/chatbot/ask/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ question: message })
+            });
+
+            const data = await response.json();
+
+            // Hiển thị tin nhắn phản hồi từ bot
+            chatBox.innerHTML += `<div class="message bot-message">${data.answer}</div>`;
+            scrollToBottom();
+            input.value = '';
+        }
+        
+
+    </script>
+<a href="https://t.me/TEN_BOT_CUA_BAN" target="_blank">
+    <button style="background-color:#0088cc; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">
+        🚀 Mở Telegram Bot
+    </button>
+</a>
+
+</body>
+</html>

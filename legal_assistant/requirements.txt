@@ -1,0 +1,13 @@
+django~=5.2
+requests~=2.32.3
+flask~=3.1.0
+pandas~=2.2.3
+djangorestframework~=3.16.0
+reportlab~=3.6.13
+python-telegram-bot~=22.0
+scrapy~=2.12.0
+itemadapter~=0.3.0
+selenium~=4.24.0
+beautifulsoup4~=4.12.3
+python-decouple~=3.8
+csv

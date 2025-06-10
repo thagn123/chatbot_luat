@@ -1,4 +1,15 @@
 # chatbot_luat
+
+
+## Yêu Cầu
+
+- Python 3.x
+- Các thư viện cần thiết (liệt kê bên dưới)
+
+## Cài Đặt
+
+1. **Clone Dự Án**:
+ 
 ## 📦 Các thư viện cần thiết
 Đặt Chỉ ở legal_assistant
 Dưới đây là danh sách các thư viện quan trọng để chạy dự án này:
@@ -29,7 +40,7 @@ pip install -r requirements.txt
 Chạy web bằng dòng lệnh
 ```
 python manage.py runserver
+Chạy Telegram_bot
+python telegram_bot/bot.py
+TOKEN trong file .env
 ```
-### Chạy file ""crawl_vanban.py"" - Để lấy link tải các văn bản pháp luật mới nhất
-tiếp tục chạy file " hhh.py" - Tải các văn bản PDF 
-----Các văn bản sẽ được lưu trong thư mục "pdfs"
